@@ -184,7 +184,7 @@ export default {
     proxy: {
       '/': {
         'target': {
-          'host': `${SITE_NAME}.dev`,
+          'host': `${SITE_NAME}.localhost`,
           'protocol': 'http',
           'port': 80
         },

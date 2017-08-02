@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="$ContentLocale">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    $ExtendedMetaTags
+    <% if $IsNotWebpackDevServer %><link href="{$WebpackBaseURL}{$ThemeDir}/dist/css/style.css" rel="stylesheet" type="text/css"  /><% end_if %>
 </head>
-<body>
-
-    <% include Header %>
-
-    {$Form}
-    {$Layout}
-
-    <% include Footer %>
-
-    <%-- Bundle file, could also be included using the Requirements API--%>
-
-    <%-- Once in production you can access the js and css files using
-         their respective tags rather than including the full bundle --%>
-    <script src="{$BaseURL}{$ThemeDir}/dist/bundle.js" charset="utf-8"></script>
+<body id="Body$ClassName">
+<div id="Wrapper">
+    <header>
+        <a href="/" class="home-button">$SiteConfig.Title</a>
+        <% include Navigation %>
+        <a href="#" class="menu-button">menu</a>
+    </header
+    <div id="Layout">
+        <% include Breadcrumbs %>
+        <div id="page-holder">
+            <% include CallToAction %>
+            $Layout
+        </div>
+        <% include Footer %>
+    </div>
+</div>
+    <script src="{$WebpackBaseURL}{$ThemeDir}/dist/bundle.js" charset="utf-8"></script>
 </body>
 </html>

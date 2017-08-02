@@ -1,0 +1,99 @@
+
+
+header a.home-button,
+header a.menu-button {
+    position: fixed;
+    top: 15px;
+    height: 64px;
+    width: 64px;
+    text-indent: -99999px;
+    z-index: 999;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+header a.home-button {
+    left: calc(15px + 1%);
+    background-image: url(/themes/sswebpack/images/sswebpack-square-logo-64.png);
+    width: 253px;
+}
+header a.menu-button {
+    right: calc(15px + 1%);
+    background-image: url(/themes/sswebpack/images/menu-buttonV2.png);
+}
+header a.menu-button:hover {
+    /*background-image: url(/themes/sswebpack/images/menu-button.png);*/
+}
+body.scrolled header a.home-button {
+    background-image: url(/themes/sswebpack/images/sswebpack-square-logo-64.png);
+}
+
+header a.close-menu {
+    display: block;
+    text-align: left;
+    font-size: 52px;
+    font-family: sans-serif;
+    margin-top: -0.55em;
+    padding-bottom: 0.55em;
+}
+
+header nav {
+    /*transition: all 0.2s ease-out 0.2s;
+    -webkit-transition: all 0.2s ease-out 0.2s;*/
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    background-color: #031927;
+    color: #fff;
+    z-index: 9999;
+    padding: 2em 0;
+    opacity: 0.93;
+    max-width: 400px;
+    z-index: 30;
+}
+
+body.has-menu-overlay header nav {
+    width: calc(39% - 1% - 15px);
+    padding: calc(15px + 1%);
+    min-width: 200px;
+    max-width: 400px;
+    overflow-y: auto;
+}
+
+header nav a {
+    color: #508AA8;
+    text-decoration: none;
+    font-size: 21px;
+    display: block;
+    text-transform: lowercase;
+}
+header nav a:hover,
+header nav a.current {
+    color: #EC9F05!important;
+}
+
+header nav a.section {
+    color: #fff;
+}
+header nav ul li a {
+    padding: 0.3em 0em;
+}
+header nav ul li li a:before {
+    content: "— ";
+}
+header nav ul li li a {
+    font-size: 14px;
+}
+
+
+
+@media (min-width: 375px) {
+    body header a.home-button {
+        background-image: url(/themes/sswebpack/images/logo.png);
+    }
+    body.scrolled header a.home-button {
+        background-image: url(/themes/sswebpack/images/sswebpack-square-logo-64.png);
+    }
+}

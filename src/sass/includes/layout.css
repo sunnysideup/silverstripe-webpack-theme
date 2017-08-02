@@ -1,0 +1,319 @@
+/*
+
+BEST: https://coolors.co/9e0914-031927-8ea604-508aa8-ec9f05
+
+https://coolors.co/9e0914-8ea604-f5bb00-ec9f05-d76a03
+
+https://coolors.co/9e0914-031927-9dd1f1-508aa8-c8e0f4
+
+https://coolors.co/9e0914-f4e409-eeba0b-c36f09-a63c06
+
+https://coolors.co/9e0914-223127-ce5374-dbbbf5-ddf0ff
+ */
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    font-family: arvo, serif;
+}
+
+#Wrapper {
+    min-height: 100vh;
+}
+
+header, #page-holder {
+    background-color: #fff;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: calc(64px + 30px);
+    z-index: 1;
+    border-bottom: 1px solid #9e0914;
+    background-color: rgba(255,255,255,0.77);
+    z-index: 10;
+}
+
+.scrolled header:hover{
+    cursor: n-resize;
+}
+
+#Breadcrumbs {
+    position: absolute;
+    top: calc(64px + 30px + 15px);
+    right: calc(15px + 1%);
+    z-index: 2;
+    background-color: #EC9F05;
+    padding: 0.5em;
+    color: #031927;
+    margin-bottom: 20px;
+}
+#Breadcrumbs a {
+    color: #031927;
+}
+
+.empty-space {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    clear: both;
+    height: 5vh;
+}
+
+#page-holder {
+    margin-top: calc(64px + 30px);
+    padding-bottom: 64px;
+    min-height: 800px;
+}
+
+#MaintContent {
+    overflow: auto;
+}
+
+#MySidebarImage img{
+    border-color: #9e0914;
+    width: calc(100% - 22px);
+}
+/**
+ * FOOTER
+ */
+footer#footer {
+    background-color: #9e0914;
+    color: #fff;
+    min-height: 50vh;
+    position: relative;
+    clear: both;
+}
+
+footer#footer .footer-col {
+    padding-left: 5%;
+    padding-right: 5%;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    padding-top: 2em;
+}
+footer#footer .footer-col ul,
+footer#footer .footer-col li {
+    padding-left: 0;
+    margin-left: 0;
+    list-style: none;
+}
+
+
+footer#footer .footer-col h4 {
+    color: #fff;
+}
+
+footer#footer .footer-col a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer#footer .footer-col a.section,
+footer#footer .footer-col a.current,
+footer#footer .footer-col a:hover {
+    color: #EC9F05;
+}
+
+#FooterRecentlyUpdated li {
+    font-size: 14px;
+    text-transform: none;
+}
+#FooterRecentlyUpdated li:before {
+    content: '-';
+    padding-right: 10px;
+}
+#FooterCopyrightMessage {
+    clear: both;
+}
+
+
+
+
+/**
+ * CALL TO ACTION
+ */
+
+.not-scrolled figure:hover {
+    cursor: s-resize;
+}
+
+figure.large-image {
+    width: 100%;
+    overflow: hidden;
+    background-color: #ccc;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+figure.large-image figcaption {
+    font-size: calc(2.5vh + 2.5vw);
+    padding: 7vh;
+    display: block;
+    color: #fff;
+    font-family: Montserrat, Walter Turncoat;
+    font-weight: 700;
+    /*-webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #9e0914;*/
+    text-shadow: 2px 2px #9e0914;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    line-height: 1;
+}
+
+figure.large-image a.button {
+    background-color: #9e0914;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    border: 1px solid #fff;
+    display: block;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 17px;
+    padding: 16px 31px;
+    text-decoration: none;
+    display: block;
+    position: absolute;
+    bottom: calc(15px + 1%);
+    right: calc(15px + 1%);
+    font-family: montserrat;
+}
+
+figure.large-image a.button:hover {
+    background-color: #5cbf2a;
+    border-color: #031927;
+    color: #031927;
+}
+
+figure.large-image a.button:active {
+    bottom: 16px;
+}
+
+
+
+
+
+
+
+/**
+ * columns: http://stackoverflow.com/questions/20566660/3-column-layout-html-css
+ */
+
+
+#MainDetails > main {
+    margin-top: 30px;
+}
+
+#MainDetails .content-padding {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 550px;
+    padding: 10px;
+}
+
+@media screen and (min-width: 450px) {
+    #MainDetails .content-padding {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 550px;
+        padding: 20px;
+    }
+}
+
+@media screen and (min-width: 750px) {
+    #MainDetails > main {
+        margin-top: 0px;
+    }
+
+    #MainDetails > main,
+    #MainDetails > aside,
+    #MainDetails > section {
+        width: 50%;
+    }
+
+    #MainDetails > main {
+        float: left;
+    }
+
+    #MainDetails aside {
+        float: right;
+    }
+
+    #MainDetails.two > section,
+    #MainDetails.three > section {
+        clear: left;
+        float: left;
+    }
+
+    #MainDetails .content-padding {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 550px;
+        padding: 40px 20px;
+    }
+    footer#footer .footer-col {
+        width: 41%;
+        padding-left: 3%;
+        padding-right: 3%;
+        float: left;
+    }
+    #TopLevelMenu {display: none;}
+
+
+}
+
+@media screen and (min-width: 1100px) {
+    footer#footer .footer-col {
+        width: 26%;
+        padding-left: 3.65%;
+        padding-right: 3.65%;
+        float: left;
+        text-transform: uppercase;
+        font-size: 1.5em;
+        padding-top: 2em;
+    }
+    #TopLevelMenu {display: block;}
+}
+
+@media screen and (min-width: 1550px) {
+    #MainDetails > section {
+        float: right;
+    }
+
+    #MainDetails > aside {
+        float: left;
+    }
+
+    #MainDetails.two > section,
+    #MainDetails.two > main,
+    #MainDetails.two > aside {
+        width: 50%;
+        clear: none;
+    }
+
+    #MainDetails.three > section,
+    #MainDetails.three > main,
+    #MainDetails.three > aside {
+        width: 33.3%;
+        clear: none;
+    }
+
+    #MainDetails .content-padding {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 550px;
+        padding: 80px 40px;
+    }
+}

@@ -6,6 +6,7 @@ export default function () {
     init() {
 
       console.log(now());
+      console.log('hello');
 
     }
   };
