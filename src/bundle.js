@@ -3,6 +3,8 @@ import './sass/style.sass';
 import './sass/editor.sass';
 
 /** JS */
+import $ from 'jquery';
+
 import MAIN from './js/main';
-import MENU from './js/menu';
+import './js/menu';
 MAIN();
