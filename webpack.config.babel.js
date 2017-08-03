@@ -39,7 +39,12 @@ if(process.env.NODE_ENV === 'production') {
   plugins = [
     new webpack.optimize.UglifyJsPlugin(),
     extractEditor,
-    extractMain
+    extractMain,
+    new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery"
+    })
   ];
 
   // Signature Settings - disable in signature.js
@@ -65,8 +70,10 @@ if(process.env.NODE_ENV === 'production') {
   Main Config Object
 */
 
+
+//sswebpack_mysite
 export default {
-  entry: './src/bundle.js',
+  entry: '../sswebpack_mysite/src/main.js',
 
   output: {
     path: path.resolve(__dirname, 'dist'),
