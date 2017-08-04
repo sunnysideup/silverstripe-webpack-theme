@@ -62,16 +62,20 @@ if(process.env.NODE_ENV === 'production') {
     new webpack.HotModuleReplacementPlugin(),
     new DashboardPlugin(),
     extractEditor,
+    new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery"
+    }),
   ];
 }
-
 
 /*
   Main Config Object
 */
 
 
-//sswebpack_mysite
+//./sswebpack_mysite
 export default {
   entry: '../sswebpack_mysite/src/main.js',
 
@@ -98,7 +102,7 @@ export default {
             {
               loader: 'postcss-loader',
               options: {
-                sourceMap: true
+                sourceMap: true,
               }
             },
             {
@@ -148,7 +152,8 @@ export default {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['es2015']
+            cacheDirectory: true,
+            presets: [require.resolve("babel-preset-es2015")]
           }
         }
       },
@@ -182,6 +187,13 @@ export default {
       }
     ]
   },
+
+  resolve: {
+        modules: [
+            path.join(__dirname, "node_modules"),
+        ],
+        extensions: [".js", ".jsx"]
+    },
 
   devServer: {
     disableHostCheck: true,
