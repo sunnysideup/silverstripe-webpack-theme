@@ -200,6 +200,9 @@ export default {
         modules: [
             path.join(__dirname, "node_modules"),
         ],
+        alias: {
+            Base: path.resolve(__dirname, "../sswebpack_base/src/main.js")
+        }
         extensions: [".js", ".jsx"]
     },
 
