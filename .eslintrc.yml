@@ -13,6 +13,7 @@ rules:
   no-console: 0
   no-unused-vars:
     - warn
+    - args: none
   # indent:
   #   - error
   #   - 4
