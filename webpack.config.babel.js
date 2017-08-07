@@ -35,6 +35,8 @@ const extractMain = new ExtractTextPlugin({
 
 let plugins; // Define a variable to store plugin options
 
+console.log(path.resolve(__dirname, "../sswebpack_base/src/main.js"));
+
 if(process.env.NODE_ENV === 'production') {
   plugins = [
     new webpack.optimize.UglifyJsPlugin(),
@@ -44,6 +46,9 @@ if(process.env.NODE_ENV === 'production') {
         $: "jquery",
         jQuery: "jquery",
         "window.jQuery": "jquery"
+    }),
+    new webpack.ProvidePlugin({
+      Base: path.resolve(__dirname, "../sswebpack_base/src/main.js")
     })
   ];
 
@@ -67,6 +72,9 @@ if(process.env.NODE_ENV === 'production') {
         jQuery: "jquery",
         "window.jQuery": "jquery"
     }),
+    new webpack.ProvidePlugin({
+      Base: path.resolve(__dirname, "../sswebpack_base/src/main.js")
+    })
   ];
 }
 
