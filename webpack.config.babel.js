@@ -37,11 +37,12 @@ const extractMain = new ExtractTextPlugin({
 let plugins = [];
 
 if(process.env.NODE_ENV === 'production') {
-  plugins = [
+  plugins.concat([
+    //obfuscate js
     new webpack.optimize.UglifyJsPlugin(),
     extractEditor,
     extractMain
-  ];
+  ]);
 
   // Signature Settings - disable in signature.js
   if(sigVars.useSignature) {
@@ -52,13 +53,17 @@ if(process.env.NODE_ENV === 'production') {
   }
 
 } else {
-  plugins = [
+  plugins.concat([
+    //error notifications on computer
     new NotifierPlugin({alwaysNotify: true}),
+    //shows relative path in HotModuleReplacement
     new webpack.NamedModulesPlugin(),
+    //auto updating on dev server
     new webpack.HotModuleReplacementPlugin(),
+    //sexy dashboard
     new DashboardPlugin(),
     extractEditor
-  ];
+  ]);
 }
 
 plugins.push(new webpack.ProvidePlugin({
@@ -80,8 +85,7 @@ const styleLoaders = [{
   test: /\.css/i,
   use: ['style-loader', 'css-loader']
 }, {
-  //sass and scss
-  test: /.s(a|c)ss$/i,
+  test: /[^editor].\.s(a|c)ss$/i,
   include: sassFolders,
   use: extractMain.extract({
     fallback: 'style-loader',
@@ -91,6 +95,28 @@ const styleLoaders = [{
         loader: 'postcss-loader',
         options: {
           sourceMap: true,
+        }
+      },
+      {
+        loader: 'sass-loader',
+        options: {
+          sourceMap: true
+        }
+      },
+      'import-glob-loader'
+    ]
+  })
+}, {
+  test: /editor\.s(a|c)ss/i,
+  include: sassFolders,
+  use: extractEditor.extract({
+    fallback: 'style-loader',
+    use: [
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true
         }
       },
       {
@@ -115,6 +141,7 @@ const jsLoaders = [{
 }, {
   //js compilation
   test: /\.js$/i,
+  include: sources.map((source) => path.resolve(source, "src")),
   exclude: /node_modules/,
   use: {
     loader: 'babel-loader',
@@ -127,7 +154,7 @@ const jsLoaders = [{
 
 const imageLoaders = [{
   test: /\.(png|jpg|gif)$/i,
-  include: sources.map((source) => path.resolve(source, "src/images"),
+  include: sources.map((source) => path.resolve(source, "images")),
   use: [
     {
       loader: 'url-loader',
@@ -154,6 +181,7 @@ const imageLoaders = [{
   use: 'svg-inline-loader'
 }];
 
+//outputs module for webpack config
 export default {
   //what files to start from
   //bundle should include main.js from all sources
