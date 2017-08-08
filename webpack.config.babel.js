@@ -12,7 +12,6 @@ import path from 'path';
 import DashboardPlugin from 'webpack-dashboard/plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import NotifierPlugin from 'webpack-notifier';
-import {sigVars, signature} from './signature';
 
 
 /*
