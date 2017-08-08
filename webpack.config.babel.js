@@ -57,10 +57,10 @@ if(process.env.NODE_ENV === 'production') {
   plugins.push(
     //error notifications on computer
     new NotifierPlugin({alwaysNotify: true}),
-    //shows relative path in HotModuleReplacement
-    new webpack.NamedModulesPlugin(),
     //auto updating on dev server
     new webpack.HotModuleReplacementPlugin(),
+    //shows relative path in HotModuleReplacement
+    new webpack.NamedModulesPlugin(),
     //sexy dashboard
     new DashboardPlugin(),
     extractEditor
@@ -78,6 +78,7 @@ const sources = ["../sswebpack_base/src", '../sswebpack_mysite/src'];
 const sassFolders = sources.map((source) => path.resolve(source, "scss"))
   .concat(sources.map((source) => path.resolve(source, "sass")));
 
+//HMR can be fixed by using basic loaders instead of textExtract
 const sassLoader = {
   fallback: 'style-loader',
   use: [
@@ -173,19 +174,16 @@ export default {
   //what files to start from
   //bundle should include main.js from all sources
   entry: sources.map((source) => path.resolve(source, "main.js")),
-
   //access from client
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: `themes/${THEME_NAME}/dist/`,
+    publicPath: `/themes/${THEME_NAME}/dist/`,
     filename: 'bundle.js'
   },
-
   //loaders
   module: {
     rules: styleLoaders.concat(jsLoaders).concat(imageLoaders)
   },
-
   //extra settings
   resolve: {
         modules: [
@@ -193,12 +191,12 @@ export default {
         ],
         extensions: [".js", ".jsx"]
     },
-
   devServer: {
     disableHostCheck: true,
     host: '0.0.0.0',
     hot: true,
     port: 3000,
+    publicPath: `/themes/${THEME_NAME}/dist/`,
     proxy: {
       '/': {
         'target': {
@@ -212,6 +210,5 @@ export default {
     },
     stats: 'errors-only'
   },
-
   plugins: plugins,
 };
