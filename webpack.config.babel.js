@@ -43,13 +43,6 @@ if(process.env.NODE_ENV === 'production') {
     extractMain
   );
 
-  // Signature Settings - disable in signature.js
-  if(sigVars.useSignature) {
-    plugins.push(new webpack.BannerPlugin({
-      banner: signature,
-      test: [/\.js$/, /\.css$/]
-    }));
-  }
 
 //development
 } else {
