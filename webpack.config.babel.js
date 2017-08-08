@@ -26,6 +26,7 @@ const THEME_NAME = path.basename(__dirname);
   Plugin configuration
 */
 
+//different css points
 const extractEditor = new ExtractTextPlugin({
   filename: 'css/editor.css',
 });
@@ -37,12 +38,11 @@ const extractMain = new ExtractTextPlugin({
 let plugins = [];
 
 if(process.env.NODE_ENV === 'production') {
-  plugins.concat([
-    //obfuscate js
+  plugins.push(
     new webpack.optimize.UglifyJsPlugin(),
     extractEditor,
     extractMain
-  ]);
+  );
 
   // Signature Settings - disable in signature.js
   if(sigVars.useSignature) {
@@ -52,8 +52,9 @@ if(process.env.NODE_ENV === 'production') {
     }));
   }
 
+//development
 } else {
-  plugins.concat([
+  plugins.push(
     //error notifications on computer
     new NotifierPlugin({alwaysNotify: true}),
     //shows relative path in HotModuleReplacement
@@ -63,7 +64,7 @@ if(process.env.NODE_ENV === 'production') {
     //sexy dashboard
     new DashboardPlugin(),
     extractEditor
-  ]);
+  );
 }
 
 plugins.push(new webpack.ProvidePlugin({
@@ -72,62 +73,45 @@ plugins.push(new webpack.ProvidePlugin({
     "window.jQuery": "jquery"
 }))
 
-/*
-  Main Config Object
-*/
 const sources = ["../sswebpack_base/src", '../sswebpack_mysite/src'];
 
 const sassFolders = sources.map((source) => path.resolve(source, "scss"))
   .concat(sources.map((source) => path.resolve(source, "sass")));
+
+const sassLoader = {
+  fallback: 'style-loader',
+  use: [
+    'css-loader',
+    {
+      loader: 'postcss-loader',
+      options: {
+        sourceMap: true
+      }
+    },
+    {
+      loader: 'sass-loader',
+      options: {
+        sourceMap: true
+      }
+    },
+    'import-glob-loader'
+  ]
+}
 
 const styleLoaders = [{
   //basic css
   test: /\.css/i,
   use: ['style-loader', 'css-loader']
 }, {
+  //main styles
   test: /[^editor].\.s(a|c)ss$/i,
   include: sassFolders,
-  use: extractMain.extract({
-    fallback: 'style-loader',
-    use: [
-      'css-loader',
-      {
-        loader: 'postcss-loader',
-        options: {
-          sourceMap: true,
-        }
-      },
-      {
-        loader: 'sass-loader',
-        options: {
-          sourceMap: true
-        }
-      },
-      'import-glob-loader'
-    ]
-  })
+  use: extractMain.extract(sassLoader)
 }, {
+  //styles for editor
   test: /editor\.s(a|c)ss/i,
   include: sassFolders,
-  use: extractEditor.extract({
-    fallback: 'style-loader',
-    use: [
-      'css-loader',
-      {
-        loader: 'postcss-loader',
-        options: {
-          sourceMap: true
-        }
-      },
-      {
-        loader: 'sass-loader',
-        options: {
-          sourceMap: true
-        }
-      },
-      'import-glob-loader'
-    ]
-  })
+  use: extractEditor.extract(sassLoader)
 }];
 
 const jsLoaders = [{
@@ -181,7 +165,10 @@ const imageLoaders = [{
   use: 'svg-inline-loader'
 }];
 
-//outputs module for webpack config
+
+/*
+  Main Config Object
+*/
 export default {
   //what files to start from
   //bundle should include main.js from all sources
