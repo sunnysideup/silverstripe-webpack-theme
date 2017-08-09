@@ -74,7 +74,13 @@ const sassFolders = sources.map((source) => path.resolve(source, "scss"))
 const sassLoader = {
   fallback: 'style-loader',
   use: [
-    'css-loader',
+    'style-loader',
+    {
+      loader: 'css-loader',
+      options: {
+        sourceMap: true
+      }
+    },
     {
       loader: 'postcss-loader',
       options: {
@@ -91,15 +97,45 @@ const sassLoader = {
   ]
 }
 
+const sassLoaders = [
+  'style-loader',
+  {
+    loader: 'css-loader',
+    options: {
+      sourceMap: true
+    }
+  },
+  {
+    loader: 'postcss-loader',
+    options: {
+      sourceMap: true
+    }
+  },
+  {
+    loader: 'sass-loader',
+    options: {
+      sourceMap: true
+    }
+  }
+];
+
 const styleLoaders = [{
   //basic css
   test: /\.css/i,
   use: ['style-loader', 'css-loader']
 }, {
   //main styles
+  test: /\.s(a|c)ss$/i,
+  enforce: 'pre',
+  include: sassFolders,
+  use: [
+    'import-glob-loader'
+  ]
+}, {
+  //main styles
   test: /[^editor].\.s(a|c)ss$/i,
   include: sassFolders,
-  use: extractMain.extract(sassLoader)
+  use: sassLoaders
 }, {
   //styles for editor
   test: /editor\.s(a|c)ss/i,
@@ -158,14 +194,13 @@ const imageLoaders = [{
   use: 'svg-inline-loader'
 }];
 
-
 /*
   Main Config Object
 */
 export default {
   //what files to start from
   //bundle should include main.js from all sources
-  entry: sources.map((source) => path.resolve(source, "main.js")),
+  entry: path.resolve('../sswebpack_mysite/src', "main.js"),
   //access from client
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -181,6 +216,9 @@ export default {
         modules: [
             path.join(__dirname, "node_modules"),
         ],
+        alias: {
+            Base$: path.resolve(__dirname, "../sswebpack_base/src/main.js")
+        },
         extensions: [".js", ".jsx"]
     },
   devServer: {
