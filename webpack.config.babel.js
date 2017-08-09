@@ -36,7 +36,9 @@ const extractMain = new ExtractTextPlugin({
 //define plugins
 let plugins = [];
 
-if(process.env.NODE_ENV === 'production') {
+const IS_PROD = process.env.NODE_ENV === 'production';
+
+if(IS_PROD) {
   plugins.push(
     new webpack.optimize.UglifyJsPlugin(),
     extractEditor,
@@ -71,16 +73,10 @@ const sassFolders = sources.map((source) => path.resolve(source, "scss"))
   .concat(sources.map((source) => path.resolve(source, "sass")));
 
 //HMR can be fixed by using basic loaders instead of textExtract
-const sassLoader = {
+const sassLoaderExtract =  {
   fallback: 'style-loader',
   use: [
-    'style-loader',
-    {
-      loader: 'css-loader',
-      options: {
-        sourceMap: true
-      }
-    },
+    'css-loader',
     {
       loader: 'postcss-loader',
       options: {
@@ -93,31 +89,8 @@ const sassLoader = {
         sourceMap: true
       }
     },
-    'import-glob-loader'
   ]
 }
-
-const sassLoaders = [
-  'style-loader',
-  {
-    loader: 'css-loader',
-    options: {
-      sourceMap: true
-    }
-  },
-  {
-    loader: 'postcss-loader',
-    options: {
-      sourceMap: true
-    }
-  },
-  {
-    loader: 'sass-loader',
-    options: {
-      sourceMap: true
-    }
-  }
-];
 
 const styleLoaders = [{
   //basic css
@@ -125,22 +98,14 @@ const styleLoaders = [{
   use: ['style-loader', 'css-loader']
 }, {
   //main styles
-  test: /\.s(a|c)ss$/i,
-  enforce: 'pre',
-  include: sassFolders,
-  use: [
-    'import-glob-loader'
-  ]
-}, {
-  //main styles
   test: /[^editor].\.s(a|c)ss$/i,
   include: sassFolders,
-  use: sassLoaders
+  use: extractMain.extract(sassLoaderExtract)
 }, {
   //styles for editor
   test: /editor\.s(a|c)ss/i,
   include: sassFolders,
-  use: extractEditor.extract(sassLoader)
+  use: extractEditor.extract(sassLoaderExtract)
 }];
 
 const jsLoaders = [{
@@ -217,7 +182,7 @@ export default {
             path.join(__dirname, "node_modules"),
         ],
         alias: {
-            Base$: path.resolve(__dirname, "../sswebpack_base/src/main.js")
+            base: path.resolve(__dirname, "../sswebpack_base/src/")
         },
         extensions: [".js", ".jsx"]
     },
