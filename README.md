@@ -1,12 +1,8 @@
-MEDIA BREAK POINTS:
+# Base SilverStripe theme with a webpack build system
 
+## Installation
+Install this to your themes folder and install sswebpack_base to the themes folder.
+Add a sswebpack_mysite folder with a src/main.js as the base and use imports inside there to add sass files "import './sass/style.sass'"
+You can access the base theme files by using "@import '~base/sass/{file}'" inside a sass file.
 
-min-width: 1701px
- - font size increase
-max-width: 1700px
-max-width: 1400px
-max-width: 1300px
-max-width: 1100px
-max-width: 960px: MOBILE
-max-width: 480px: 10px padding
-max-width: 380px: 5px padding
+sswebpack_mysite/src/main.js is the root of all includes
