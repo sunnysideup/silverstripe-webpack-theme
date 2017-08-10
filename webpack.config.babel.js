@@ -36,26 +36,17 @@ const extractMain = new ExtractTextPlugin({
 //define plugins
 let plugins = [];
 
-<<<<<<< HEAD
-if(process.env.NODE_ENV === 'production') {
+const IS_PROD = process.env.NODE_ENV === 'production';
+
+if(IS_PROD) {
     plugins.push(
         new webpack.optimize.UglifyJsPlugin(),
         extractEditor,
         extractMain
     );
-=======
-const IS_PROD = process.env.NODE_ENV === 'production';
-
-if(IS_PROD) {
-  plugins.push(
-    new webpack.optimize.UglifyJsPlugin(),
-    extractEditor,
-    extractMain
-  );
 
 
 //development
->>>>>>> 8d7ddb6217e5548be4fa3680d413291a2fb91bed
 } else {
     plugins.push(
         //error notifications on computer
@@ -70,24 +61,19 @@ if(IS_PROD) {
     );
 }
 
-plugins.push(
-    new webpack.ProvidePlugin(
-        {
-            $: "jquery",
-            jQuery: "jquery",
-            "window.jQuery": "jquery"
-        }
-    )
-)
+plugins.push(new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery"
+}))
 
-const sources = ["../sswebpack_base/src", '../sswebpack_mysite/src'];
+const sources = [`../${THEME_NAME}_base/src`, `../${THEME_NAME}_mysite/src`];
 
 const sassFolders = sources.map((source) => path.resolve(source, "scss"))
     .concat(sources.map((source) => path.resolve(source, "sass")));
 
 //HMR can be fixed by using basic loaders instead of textExtract
-<<<<<<< HEAD
-const sassLoader = {
+const sassLoaderExtract =    {
     fallback: 'style-loader',
     use: [
         'css-loader',
@@ -103,27 +89,7 @@ const sassLoader = {
                 sourceMap: true
             }
         },
-        'import-glob-loader'
     ]
-=======
-const sassLoaderExtract =  {
-  fallback: 'style-loader',
-  use: [
-    'css-loader',
-    {
-      loader: 'postcss-loader',
-      options: {
-        sourceMap: true
-      }
-    },
-    {
-      loader: 'sass-loader',
-      options: {
-        sourceMap: true
-      }
-    },
-  ]
->>>>>>> 8d7ddb6217e5548be4fa3680d413291a2fb91bed
 }
 
 const styleLoaders = [{
@@ -131,27 +97,15 @@ const styleLoaders = [{
     test: /\.css/i,
     use: ['style-loader', 'css-loader']
 }, {
-<<<<<<< HEAD
     //main styles
     test: /[^editor].\.s(a|c)ss$/i,
     include: sassFolders,
-    use: extractMain.extract(sassLoader)
+    use: extractMain.extract(sassLoaderExtract)
 }, {
     //styles for editor
     test: /editor\.s(a|c)ss/i,
     include: sassFolders,
-    use: extractEditor.extract(sassLoader)
-=======
-  //main styles
-  test: /[^editor].\.s(a|c)ss$/i,
-  include: sassFolders,
-  use: extractMain.extract(sassLoaderExtract)
-}, {
-  //styles for editor
-  test: /editor\.s(a|c)ss/i,
-  include: sassFolders,
-  use: extractEditor.extract(sassLoaderExtract)
->>>>>>> 8d7ddb6217e5548be4fa3680d413291a2fb91bed
+    use: extractEditor.extract(sassLoaderExtract)
 }];
 
 const jsLoaders = [{
@@ -209,14 +163,13 @@ const imageLoaders = [{
     Main Config Object
 */
 export default {
-<<<<<<< HEAD
     //what files to start from
     //bundle should include main.js from all sources
-    entry: sources.map((source) => path.resolve(source, "main.js")),
+    entry: path.resolve(`../${THEME_NAME}_mysite/src`, "main.js"),
     //access from client
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: `/themes/${THEME_NAME}/dist/`,
+        path: path.resolve(`../${THEME_NAME}_dist/`, ''),
+        publicPath: `/themes/${THEME_NAME}_dist/`,
         filename: 'bundle.js'
     },
     //loaders
@@ -225,28 +178,11 @@ export default {
     },
     //extra settings
     resolve: {
-=======
-  //what files to start from
-  //bundle should include main.js from all sources
-  entry: path.resolve('../sswebpack_mysite/src', "main.js"),
-  //access from client
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: `/themes/${THEME_NAME}/dist/`,
-    filename: 'bundle.js'
-  },
-  //loaders
-  module: {
-    rules: styleLoaders.concat(jsLoaders).concat(imageLoaders)
-  },
-  //extra settings
-  resolve: {
->>>>>>> 8d7ddb6217e5548be4fa3680d413291a2fb91bed
         modules: [
             path.join(__dirname, "node_modules"),
         ],
         alias: {
-            base: path.resolve(__dirname, "../sswebpack_base/src/")
+            base: path.resolve(`../${THEME_NAME}_base/src/`)
         },
         extensions: [".js", ".jsx"]
     },
@@ -255,7 +191,7 @@ export default {
         host: '0.0.0.0',
         hot: true,
         port: 3000,
-        publicPath: `/themes/${THEME_NAME}/dist/`,
+        publicPath: `/themes/${THEME_NAME}_dist/`,
         proxy: {
             '/': {
                 'target': {
