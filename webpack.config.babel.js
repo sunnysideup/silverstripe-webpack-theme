@@ -36,12 +36,26 @@ const extractMain = new ExtractTextPlugin({
 //define plugins
 let plugins = [];
 
+<<<<<<< HEAD
 if(process.env.NODE_ENV === 'production') {
     plugins.push(
         new webpack.optimize.UglifyJsPlugin(),
         extractEditor,
         extractMain
     );
+=======
+const IS_PROD = process.env.NODE_ENV === 'production';
+
+if(IS_PROD) {
+  plugins.push(
+    new webpack.optimize.UglifyJsPlugin(),
+    extractEditor,
+    extractMain
+  );
+
+
+//development
+>>>>>>> 8d7ddb6217e5548be4fa3680d413291a2fb91bed
 } else {
     plugins.push(
         //error notifications on computer
@@ -72,6 +86,7 @@ const sassFolders = sources.map((source) => path.resolve(source, "scss"))
     .concat(sources.map((source) => path.resolve(source, "sass")));
 
 //HMR can be fixed by using basic loaders instead of textExtract
+<<<<<<< HEAD
 const sassLoader = {
     fallback: 'style-loader',
     use: [
@@ -90,6 +105,25 @@ const sassLoader = {
         },
         'import-glob-loader'
     ]
+=======
+const sassLoaderExtract =  {
+  fallback: 'style-loader',
+  use: [
+    'css-loader',
+    {
+      loader: 'postcss-loader',
+      options: {
+        sourceMap: true
+      }
+    },
+    {
+      loader: 'sass-loader',
+      options: {
+        sourceMap: true
+      }
+    },
+  ]
+>>>>>>> 8d7ddb6217e5548be4fa3680d413291a2fb91bed
 }
 
 const styleLoaders = [{
@@ -97,6 +131,7 @@ const styleLoaders = [{
     test: /\.css/i,
     use: ['style-loader', 'css-loader']
 }, {
+<<<<<<< HEAD
     //main styles
     test: /[^editor].\.s(a|c)ss$/i,
     include: sassFolders,
@@ -106,6 +141,17 @@ const styleLoaders = [{
     test: /editor\.s(a|c)ss/i,
     include: sassFolders,
     use: extractEditor.extract(sassLoader)
+=======
+  //main styles
+  test: /[^editor].\.s(a|c)ss$/i,
+  include: sassFolders,
+  use: extractMain.extract(sassLoaderExtract)
+}, {
+  //styles for editor
+  test: /editor\.s(a|c)ss/i,
+  include: sassFolders,
+  use: extractEditor.extract(sassLoaderExtract)
+>>>>>>> 8d7ddb6217e5548be4fa3680d413291a2fb91bed
 }];
 
 const jsLoaders = [{
@@ -159,11 +205,11 @@ const imageLoaders = [{
     use: 'svg-inline-loader'
 }];
 
-
 /*
     Main Config Object
 */
 export default {
+<<<<<<< HEAD
     //what files to start from
     //bundle should include main.js from all sources
     entry: sources.map((source) => path.resolve(source, "main.js")),
@@ -179,9 +225,29 @@ export default {
     },
     //extra settings
     resolve: {
+=======
+  //what files to start from
+  //bundle should include main.js from all sources
+  entry: path.resolve('../sswebpack_mysite/src', "main.js"),
+  //access from client
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: `/themes/${THEME_NAME}/dist/`,
+    filename: 'bundle.js'
+  },
+  //loaders
+  module: {
+    rules: styleLoaders.concat(jsLoaders).concat(imageLoaders)
+  },
+  //extra settings
+  resolve: {
+>>>>>>> 8d7ddb6217e5548be4fa3680d413291a2fb91bed
         modules: [
             path.join(__dirname, "node_modules"),
         ],
+        alias: {
+            base: path.resolve(__dirname, "../sswebpack_base/src/")
+        },
         extensions: [".js", ".jsx"]
     },
     devServer: {
