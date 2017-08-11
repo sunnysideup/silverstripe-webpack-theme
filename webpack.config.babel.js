@@ -108,27 +108,30 @@ const styleLoaders = [{
     use: extractEditor.extract(sassLoaderExtract)
 }];
 
-const jsLoaders = [{
-    //eslint check
-    enforce: 'pre',
-    test: /\.js$/i,
-    exclude: /node_modules/,
-    use: {
-        loader: 'eslint-loader'
-    }
-}, {
-    //js compilation
-    test: /\.js$/i,
-    include: sources.map((source) => path.resolve(source, "src")),
-    exclude: /node_modules/,
-    use: {
-        loader: 'babel-loader',
-        options: {
-            cacheDirectory: true,
-            presets: [require.resolve("babel-preset-es2015")]
+const jsLoaders = [
+    // {
+    //     //eslint check
+    //     enforce: 'pre',
+    //     test: /\.js$/i,
+    //     exclude: /node_modules/,
+    //     use: {
+    //         loader: 'eslint-loader'
+    //     }
+    // },
+    {
+        //js compilation
+        test: /\.js$/i,
+        include: sources.map((source) => path.resolve(source, "src")),
+        exclude: /node_modules/,
+        use: {
+            loader: 'babel-loader',
+            options: {
+                cacheDirectory: true,
+                presets: [require.resolve("babel-preset-es2015")]
+            }
         }
     }
-}];
+];
 
 const imageLoaders = [{
     test: /\.(png|jpg|gif)$/i,
@@ -182,7 +185,8 @@ export default {
             path.join(__dirname, "node_modules"),
         ],
         alias: {
-            base: path.resolve(`../${THEME_NAME}_base/src/`)
+            base: path.resolve(`../${THEME_NAME}_base/src/`),
+            'jquery': 'jquery/dist/jquery',
         },
         extensions: [".js", ".jsx"]
     },
