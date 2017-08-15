@@ -11,7 +11,6 @@ import webpack from 'webpack';
 import path from 'path';
 import DashboardPlugin from 'webpack-dashboard/plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import NotifierPlugin from 'webpack-notifier';
 
 
 /*
@@ -49,8 +48,6 @@ if(IS_PROD) {
 //development
 } else {
     plugins.push(
-        //error notifications on computer
-        new NotifierPlugin({alwaysNotify: true}),
         //auto updating on dev server
         new webpack.HotModuleReplacementPlugin(),
         //shows relative path in HotModuleReplacement
@@ -187,6 +184,7 @@ export default {
         alias: {
             base: path.resolve(`../${THEME_NAME}_base/src/`),
             'jquery': 'jquery/dist/jquery',
+            'jQuery': 'jquery/dist/jquery'
         },
         extensions: [".js", ".jsx"]
     },
