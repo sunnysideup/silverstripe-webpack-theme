@@ -1,3 +1,5 @@
+#see: http://eslint.org/docs/rules/
+
 env:
   browser: true
   commonjs: true

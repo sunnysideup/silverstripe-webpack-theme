@@ -106,6 +106,7 @@ const styleLoaders = [{
 }];
 
 const jsLoaders = [
+    // KEEP THE CODE BELOW AND TURN ON IF NEEDED....
     // {
     //     //eslint check
     //     enforce: 'pre',
@@ -127,37 +128,43 @@ const jsLoaders = [
                 presets: [require.resolve("babel-preset-es2015")]
             }
         }
+    },
+    {
+        test: require.resolve('jquery'),
+        loader: 'expose-loader?jQuery!expose-loader?$'
     }
 ];
 
-const imageLoaders = [{
-    test: /\.(png|jpg|gif)$/i,
-    include: sources.map((source) => path.resolve(source, "images")),
-    use: [
-        {
-            loader: 'url-loader',
-            options: {
-                limit: 30000,
-                name: 'images/[name].[ext]'
-            }
-        },
-        {
-            loader: 'image-webpack-loader',
-            options: {
-                optipng: {
-                    optimizationLevel: 5
-                },
-                mozjpeg: {
-                    interlaced: true,
+const imageLoaders = [
+    {
+        test: /\.(png|jpg|gif)$/i,
+        include: sources.map((source) => path.resolve(source, "images")),
+        use: [
+            {
+                loader: 'url-loader',
+                options: {
+                    limit: 30000,
+                    name: 'images/[name].[ext]'
+                }
+            },
+            {
+                loader: 'image-webpack-loader',
+                options: {
+                    optipng: {
+                        optimizationLevel: 5
+                    },
+                    mozjpeg: {
+                        interlaced: true,
+                    }
                 }
             }
-        }
-    ]
-},
-{
-    test: /\.svg$/i,
-    use: 'svg-inline-loader'
-}];
+        ]
+    },
+    {
+        test: /\.svg$/i,
+        use: 'svg-inline-loader'
+    }
+];
 
 /*
     Main Config Object
@@ -207,5 +214,5 @@ export default {
         },
         stats: 'errors-only'
     },
-    plugins: plugins,
+    plugins: plugins
 };
