@@ -47,6 +47,7 @@
     "exports-loader": "^0.6.4",
     "jquery": "^3.2.1",
     "jquery-validation": "^1.17.0",
+    "lightbox2": "^2.9.0",
     "script-loader": "^0.7.0"
   }
 }
