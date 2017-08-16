@@ -105,7 +105,7 @@ const styleLoaders = [{
     use: extractEditor.extract(sassLoaderExtract)
 }];
 
-const jsLoaders = [
+var jsLoaders = [
     // KEEP THE CODE BELOW AND TURN ON IF NEEDED....
     // {
     //     //eslint check
@@ -128,12 +128,24 @@ const jsLoaders = [
                 presets: [require.resolve("babel-preset-es2015")]
             }
         }
-    },
-    {
-        test: require.resolve('jquery'),
-        loader: 'expose-loader?jQuery!expose-loader?$'
     }
 ];
+
+if(IS_PROD) {
+
+    jsLoaders.push(
+        {
+            test: require.resolve('jquery'),
+            use: [{
+                loader: 'expose-loader',
+                options: 'jQuery'
+            },{
+                loader: 'expose-loader',
+                options: '$'
+            }]
+        }
+    );
+}
 
 const imageLoaders = [
     {
