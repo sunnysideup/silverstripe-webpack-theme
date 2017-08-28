@@ -199,6 +199,7 @@ export default {
     resolve: {
         modules: [
             path.join(__dirname, "node_modules"),
+            path.resolve(`../${THEME_NAME}_node_modules/node_modules`)
         ],
         alias: {
             base: path.resolve(`../${THEME_NAME}_base/src/`),
